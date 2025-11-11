@@ -2,8 +2,7 @@ import express from "express";
 
 const server = express();
 
-server.get("/books", (req, res) => {
-  return res.json([
+const data = [
     {
       id: 1,
       title: "Star Wars",
@@ -154,7 +153,17 @@ server.get("/books", (req, res) => {
       anoPublicacao: 1997,
       paginas: 336,
     },
-  ]);
+  ]
+
+server.get("/books", (req, res) => {
+  return res.json(data);
 });
+
+server.get("/books/:id", (req, res)=>{
+  const { id } = req.params
+
+ const book = data.find(book => book.id === Number(id))  
+ return res.json(book)
+})
 
 server.listen(3000);
