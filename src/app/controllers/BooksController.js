@@ -55,9 +55,9 @@ export class BooksController {
 
   destroy(req, res) {
     const id = parseInt(req.params.id);
-    const index = this.books.findIndex(book => book.id === id);
-    const status = index >= 0? 200: 404;
-    if(index >= 0){
+    const index = this.books.findIndex((book) => book.id === id);
+    const status = index >= 0 ? 200 : 404;
+    if (index >= 0) {
       this.books.splice(index, 1);
     }
     return res.status(status).json();
