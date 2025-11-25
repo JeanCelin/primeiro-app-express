@@ -28,18 +28,39 @@ export class BooksController {
       paginas: paginas,
     };
     this.books.push(newBook);
-    
-     return res.send("Criado!");
+
+    return res.send("Criado!");
   }
 
   update(req, res) {
+    const id = parseInt(req.params.id);
+    const { title, author, theme, description, anoPublicacao, paginas } =
+      req.body;
+    const index = this.books.findIndex((book) => book.id === id);
+    const status = index >= 0 ? 200 : 404;
 
-
-
+    if (index >= 0) {
+      this.books[index] = {
+        id: parseInt(id),
+        title,
+        author,
+        theme,
+        description,
+        anoPublicacao,
+        paginas,
+      };
+    }
+    return res.status(status).json(this.books[index]);
   }
 
   destroy(req, res) {
-    console.log("Destroy");
+    const id = parseInt(req.params.id);
+    const index = this.books.findIndex(book => book.id === id);
+    const status = index >= 0? 200: 404;
+    if(index >= 0){
+      this.books.splice(index, 1);
+    }
+    return res.status(status).json();
   }
 }
 
